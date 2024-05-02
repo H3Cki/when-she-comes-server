@@ -1,7 +1,32 @@
 package wscsrv
 
+type SystemInfo struct {
+	Name              string
+	SystemName        string
+	NetworkAddress    string
+	Displays          []Display
+	Volume            int
+	VolumeMuted       bool
+	ZoomEnabled       bool
+	Actions           []Action
+	MouseSensitivity  float64
+	ScrollSensitivity float64
+}
+
+type Display struct {
+	Idx    int
+	Width  int
+	Height int
+}
+
+type SystemInfoController interface {
+	SystemInfo() (SystemInfo, error)
+}
+
 type VolumeController interface {
-	SetVolume(vol float64) error
+	GetVolume() (int, error)
+	GetMute() (bool, error)
+	SetVolumePct(p int) error
 	SetMute(isMuted bool) error
 }
 
@@ -10,60 +35,24 @@ type MouseController interface {
 	ReleaseLeft() error
 	ClickLeft() error
 	ClickRight() error
-	ScrollUp(something int) error
-	ScrollDown(something int) error
-	Move(xOffset, yOffset int) error
-	SetPosition(x, y int) error
+	ScrollUp(scrolls int) error
+	ScrollDown(scrolls int) error
+	MoveBy(x, y int) error
+	MoveTo(x, y int) error
+	Pointer() (MousePointer, error)
 }
 
-type KeyController interface {
-	// Alphabet
-	Press(byte) error
-	Release(byte) error
-	SendKey(byte) error
-	SendKeys([]byte) error
+type MousePointer int
 
-	// F keys
-	SendF1() error
-	SendF2() error
-	SendF3() error
-	SendF4() error
-	SendF5() error
-	SendF6() error
-	SendF7() error
-	SendF8() error
-	SendF9() error
-	SendF10() error
-	SendF11() error
-	SendF12() error
+const (
+	MousePointerNormal MousePointer = iota
+	MousePointerText
+	MousePointerLink
+	MousePointerUnknown
+)
 
-	// Navigation keys
-	SendEscape() error
-
-	SendTilde() error
-	SendTab() error
-	SendCapslock() error
-	SendShift() error
-	SendControl() error
-	SendAlt() error
-	SendEnter() error
-	SendBackspace() error
-
-	SendPrintScreen() error
-	SendScreenLock() error
-	SendPauseBreak() error
-
-	SendInsert() error
-	SendHome() error
-	SendPageUp() error
-	SendPageDown() error
-	SendDelete() error
-	SendEnd() error
-
-	SendArrowUp() error
-	SendArrowDown() error
-	SendArrowLeft() error
-	SendArrowRight() error
+type KeyboardController interface {
+	Type(string) error
 }
 
 type ZoomController interface {
@@ -73,29 +62,33 @@ type ZoomController interface {
 	ZoomOut() error
 }
 
-type PointerController interface {
-	IsCaret() error
-}
-
 type MediaController interface {
 	Play() error
 	Pause() error
+	Stop() error
 	Next() error
 	Previous() error
 }
 
+type ClipboardController interface {
+	// Copy() error
+	// Paste() error
+	SetContent(ClipboardContent) error
+	GetContent() (ClipboardContent, error)
+}
+
+type ClipboardContentType int
+
 const (
-	ClipboardContentTypeText = iota
+	ClipboardContentTypeText ClipboardContentType = iota
 	ClipboardContentTypeImage
 )
 
 type ClipboardContent struct {
-	Type int
-	Data any
+	Type    ClipboardContentType
+	Content []byte
 }
 
-type ClipboardController interface {
-	Copy() error
-	Paste() error
-	GetContent() (ClipboardContent, error)
+type ActionController interface {
+	OpenURL(string) error
 }

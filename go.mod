@@ -5,8 +5,15 @@ go 1.22.1
 require github.com/go-vgo/robotgo v0.110.1
 
 require (
+	github.com/moutend/go-wca v0.2.0 // indirect
+	golang.org/x/exp v0.0.0-20190731235908-ec7cb31e5a56 // indirect
+	golang.org/x/mobile v0.0.0-20230301163155-e0f57694e12c // indirect
+)
+
+require (
 	github.com/gen2brain/shm v0.0.0-20230802011745-f2460f5984f7 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
+	github.com/itchyny/volume-go v0.2.2
 	github.com/jezek/xgb v1.1.0 // indirect
 	github.com/kbinani/screenshot v0.0.0-20230812210009-b87d31814237 // indirect
 	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
@@ -24,6 +31,7 @@ require (
 	github.com/vcaesar/keycode v0.10.1 // indirect
 	github.com/vcaesar/tt v0.20.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.3 // indirect
+	golang.design/x/clipboard v0.7.0
 	golang.org/x/image v0.12.0 // indirect
 	golang.org/x/sys v0.12.0 // indirect
 )
