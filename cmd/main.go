@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"runtime"
-
-	"github.com/H3Cki/wscsrv/control"
 )
 
 func init() {
@@ -12,9 +9,5 @@ func init() {
 }
 
 func main() {
-	mouse := &control.Mouse{}
-	for {
-		fmt.Println(mouse.Pointer())
-	}
-
+	connect()
 }

@@ -1,5 +1,7 @@
 package wscsrv
 
+import "image"
+
 type SystemInfo struct {
 	Name              string
 	SystemName        string
@@ -91,4 +93,8 @@ type ClipboardContent struct {
 
 type ActionController interface {
 	OpenURL(string) error
+}
+
+type ScreenController interface {
+	Screenshot() (image.Image, error)
 }
